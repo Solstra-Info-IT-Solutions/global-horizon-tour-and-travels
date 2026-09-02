@@ -97,58 +97,57 @@ export default function ContactForm() {
   //   }
   // }
 
+
   async function handleSubmit(
-e: React.FormEvent<HTMLFormElement>
+  e: React.FormEvent<HTMLFormElement>
 ) {
-e.preventDefault();
+  e.preventDefault();
 
-// Prevent double submission
-if (isSubmitting) return;
+  // Prevent double submission
+  if (isSubmitting) return;
 
-const form = e.currentTarget;
+  const form = e.currentTarget;
 
-setIsSubmitting(true);
+  setIsSubmitting(true);
 
-try {
-const formData = new FormData(form);
+  try {
+    const formData = new FormData(form);
 
-const data = {
-  name: String(formData.get("name") || "").trim(),
-  email: String(formData.get("email") || "").trim(),
-  phone: String(formData.get("phone") || "").trim(),
-  subject: String(formData.get("subject") || "").trim(),
-  message: String(formData.get("message") || "").trim(),
-};
+    const data = {
+      name: String(formData.get("name") || "").trim(),
+      email: String(formData.get("email") || "").trim(),
+      phone: String(formData.get("phone") || "").trim(),
+      subject: String(formData.get("subject") || "").trim(),
+      message: String(formData.get("message") || "").trim(),
+    };
 
-/* =====================================================
-   BASIC VALIDATION
-===================================================== */
+    /* =====================================================
+        BASIC VALIDATION
+    ===================================================== */
 
-if (!data.name || !data.email || !data.phone) {
-  throw new Error(
-    "Please provide your name, email address and phone number."
-  );
-}
+    if (!data.name || !data.email || !data.phone) {
+      throw new Error(
+        "Please provide your name, email address and phone number."
+      );
+    }
 
-if (!data.subject) {
-  throw new Error(
-    "Please enter a subject for your message."
-  );
-}
+    if (!data.subject) {
+      throw new Error(
+        "Please enter a subject for your message."
+      );
+    }
 
-if (!data.message) {
-  throw new Error(
-    "Please enter your message before continuing."
-  );
-}
+    if (!data.message) {
+      throw new Error(
+        "Please enter your message before continuing."
+      );
+    }
 
-/* =====================================================
-   CREATE WHATSAPP MESSAGE
-===================================================== */
+    /* =====================================================
+        CREATE WHATSAPP MESSAGE
+    ===================================================== */
 
-const whatsappMessage = `
-
-
+    const whatsappMessage = `
 📩 *NEW CONTACT MESSAGE*
 
 ━━━━━━━━━━━━━━━━━━
@@ -180,64 +179,64 @@ ${data.message}
 New enquiry received from the website.
 `.trim();
 
+    /* =====================================================
+        WHATSAPP NUMBER
 
-/* =====================================================
-   WHATSAPP NUMBER
-===================================================== */
+        Country code included
+        Do not use +
+    ===================================================== */
 
-const whatsappNumber = "917770069004";
+    const whatsappNumber = "917770069004";
 
-const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-  whatsappMessage
-)}`;
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      whatsappMessage
+    )}`;
 
-/* =====================================================
-   OPEN WHATSAPP
-===================================================== */
+    /* =====================================================
+        OPEN WHATSAPP
+    ===================================================== */
 
-window.open(
-  whatsappURL,
-  "_blank",
-  "noopener,noreferrer"
-);
+    window.open(
+      whatsappURL,
+      "_blank",
+      "noopener,noreferrer"
+    );
 
-/* =====================================================
-   RESET FORM
-===================================================== */
+    /* =====================================================
+        RESET FORM
+    ===================================================== */
 
-form.reset();
+    form.reset();
 
-/* =====================================================
-   SUCCESS MODAL
-===================================================== */
+    /* =====================================================
+        SUCCESS MODAL
+    ===================================================== */
 
-setModal({
-  isOpen: true,
-  type: "success",
-  title: "Message Ready!",
-  message:
-    "Your message has been prepared successfully. WhatsApp has been opened so you can send it directly to our team.",
-});
+    setModal({
+      isOpen: true,
+      type: "success",
+      title: "Message Ready!",
+      message:
+        "Your message has been prepared successfully. WhatsApp has been opened so you can send it directly to our team.",
+    });
 
-} catch (error) {
-console.error("Contact Form Error:", error);
+  } catch (error) {
+    console.error("Contact Form Error:", error);
 
-setModal({
-  isOpen: true,
-  type: "error",
-  title: "Unable To Continue",
-  message:
-    error instanceof Error
-      ? error.message
-      : "Something went wrong. Please try again.",
-});
+    setModal({
+      isOpen: true,
+      type: "error",
+      title: "Unable To Continue",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+    });
 
-} finally {
-setIsSubmitting(false);
+  } finally {
+    setIsSubmitting(false);
+  }
 }
-}
-
-
 
   return (
     <>

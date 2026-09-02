@@ -23,40 +23,44 @@ export default function Contact() {
   ];
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+const formData = new FormData(e.currentTarget);
 
-    const name = formData.get("name")?.toString() || "";
-    const email = formData.get("email")?.toString() || "";
-    const phone = formData.get("phone")?.toString() || "";
-    const message = formData.get("message")?.toString() || "";
+const name = formData.get("name")?.toString() || "";
+const email = formData.get("email")?.toString() || "";
+const phone = formData.get("phone")?.toString() || "";
+const message = formData.get("message")?.toString() || "";
 
-    // Replace this number with your client's WhatsApp number
-    const whatsappNumber = "917770069004";
+// Client WhatsApp number
+// Country code included, without +
+const whatsappNumber = "917770069004";
 
-    const whatsappMessage = `
+const whatsappMessage = `
 🌍 *NEW TRAVEL ENQUIRY*
+
+━━━━━━━━━━━━━━
 
 👤 *Name:* ${name}
 
 📧 *Email:* ${email}
 
-📱 *Phone:* ${country} ${phone}
+📱 *Phone:* ${phone}
 
 💬 *Message:*
 ${message}
 
 ━━━━━━━━━━━━━━
 Sent from Global Horizons Tours & Travels Website
-`;
+`.trim();
 
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-      whatsappMessage
-    )}`;
+const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    whatsappMessage
+  )}`;
 
-    window.open(url, "_blank");
-  };
+window.open(url, "_blank", "noopener,noreferrer");
+};
+
 
   return (
     <section
