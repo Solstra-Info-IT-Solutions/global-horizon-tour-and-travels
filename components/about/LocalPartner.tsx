@@ -50,7 +50,7 @@ export default function LocalPartner() {
             <div className="relative min-h-[380px] overflow-hidden md:min-h-[600px]">
 
               <img
-                src="/image Side.png"
+                src="/international-persons-exploring-india.png"
                 alt="International guests exploring India"
                 className="absolute inset-0 h-full w-full object-cover transition duration-1000 hover:scale-105"
               />

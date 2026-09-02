@@ -97,7 +97,7 @@ export default function OurStory() {
           <div className="relative overflow-hidden rounded-[3px] bg-[#f1eee7] p-3 shadow-[0_25px_70px_rgba(20,89,106,0.12)]">
             <div className="group relative overflow-hidden">
               <img
-                src="/image.png"
+                src="/global-horizon-travel-experience.png"
                 alt="Global Horizon travel experience"
                 className="h-[460px] w-full object-cover transition duration-700 group-hover:scale-105"
               />
