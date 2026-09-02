@@ -158,7 +158,7 @@ export default function TransportQuoteForm() {
   // };
 
 
-  const handleSubmit = async (
+const handleSubmit = async (
   event: FormEvent<HTMLFormElement>
 ) => {
   event.preventDefault();
@@ -170,7 +170,7 @@ export default function TransportQuoteForm() {
 
   try {
     /* =====================================================
-        CREATE WHATSAPP MESSAGE
+       CREATE WHATSAPP MESSAGE
     ===================================================== */
 
     const whatsappMessage = `
@@ -180,7 +180,7 @@ export default function TransportQuoteForm() {
 
 👤 *CUSTOMER DETAILS*
 
-Name: ${formData.name || "Not provided"}
+Name: ${formData.fullName || "Not provided"}
 
 Email: ${formData.email || "Not provided"}
 
@@ -190,43 +190,70 @@ Phone: ${formData.phone || "Not provided"}
 
 🗺️ *JOURNEY DETAILS*
 
-From: ${formData.from || "Not provided"}
+Journey Type: ${formData.journeyType || "Not specified"}
 
-To: ${formData.to || "Not provided"}
+Pickup Location: ${
+  formData.pickupLocation || "Not provided"
+}
 
-Travel Date: ${formData.travelDate || "Not provided"}
+Drop Location: ${
+  formData.dropLocation || "Not provided"
+}
+
+Departure Date: ${
+  formData.departureDate || "Not provided"
+}
+
+Departure Time: ${
+  formData.departureTime || "Not provided"
+}
+
+${
+  formData.journeyType === "round-trip"
+    ? `
+Return Date: ${formData.returnDate || "Not provided"}
+
+Return Time: ${formData.returnTime || "Not provided"}
+`
+    : ""
+}
 
 ━━━━━━━━━━━━━━━━━━
 
 🚐 *TRANSPORT REQUIREMENTS*
 
-Vehicle Type: ${formData.vehicleType || "Not specified"}
-
-Number of Travellers: ${
-  formData.travellers || "Not specified"
+Vehicle Type: ${
+  formData.vehicleType || "Not specified"
 }
 
-Journey Type: ${
-  formData.journeyType || "Not specified"
+Number of Passengers: ${
+  formData.passengers || "Not specified"
+}
+
+Number of Vehicles: ${
+  formData.vehicles || "1"
 }
 
 ━━━━━━━━━━━━━━━━━━
 
 💬 *ADDITIONAL REQUIREMENTS*
 
-${formData.message || "No additional requirements provided."}
+${
+  formData.requirements ||
+  "No additional requirements provided."
+}
 
 ━━━━━━━━━━━━━━━━━━
 
 🌍 *Global Horizons Tours & Travels*
+
 *New Transport Enquiry*
 `.trim();
 
     /* =====================================================
-        WHATSAPP NUMBER
-
-        Country code ke saath number use karein.
-        + sign nahi lagana.
+       WHATSAPP NUMBER
+       Country code ke saath number.
+       + sign nahi lagana.
     ===================================================== */
 
     const whatsappNumber = "917770069004";
@@ -236,7 +263,7 @@ ${formData.message || "No additional requirements provided."}
     )}`;
 
     /* =====================================================
-        OPEN WHATSAPP
+       OPEN WHATSAPP
     ===================================================== */
 
     window.open(
@@ -246,13 +273,13 @@ ${formData.message || "No additional requirements provided."}
     );
 
     /* =====================================================
-        RESET FORM
+       RESET FORM
     ===================================================== */
 
     setFormData(initialFormData);
 
     /* =====================================================
-        SUCCESS MODAL
+       SUCCESS MODAL
     ===================================================== */
 
     setModal({
