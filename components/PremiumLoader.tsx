@@ -3,37 +3,57 @@
 import { useEffect, useState } from "react";
 import { Plane, MapPin, Sparkles } from "lucide-react";
 
+const LOADER_DURATION = 10000; // 10 seconds
+
 export default function PremiumLoader() {
   const [progress, setProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    const startTime = Date.now();
+
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        }
+      const elapsedTime = Date.now() - startTime;
 
-        const increment = Math.floor(Math.random() * 8) + 2;
+      const calculatedProgress = Math.min(
+        (elapsedTime / LOADER_DURATION) * 100,
+        100
+      );
 
-        return Math.min(prev + increment, 100);
-      });
-    }, 180);
+      setProgress(Math.floor(calculatedProgress));
+
+      if (elapsedTime >= LOADER_DURATION) {
+        clearInterval(interval);
+
+        setTimeout(() => {
+          setIsVisible(false);
+        }, 500);
+      }
+    }, 50);
 
     return () => clearInterval(interval);
   }, []);
 
+  if (!isVisible) return null;
+
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#082f3a]">
+    <div
+      className={`fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-[#082f3a] transition-opacity duration-700 ${
+        progress >= 100 ? "opacity-0" : "opacity-100"
+      }`}
+    >
       {/* =====================================================
           PREMIUM BACKGROUND
       ====================================================== */}
 
       <div className="absolute inset-0">
+
         {/* Main Gradient */}
+
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(20,89,106,0.45),transparent_55%)]" />
 
         {/* Gold Glow */}
+
         <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#d9a737]/[0.06] blur-[120px]" />
 
         {/* Decorative Lines */}
@@ -55,7 +75,9 @@ export default function PremiumLoader() {
         <div className="loader-star loader-star-3" />
         <div className="loader-star loader-star-4" />
         <div className="loader-star loader-star-5" />
+
       </div>
+
 
       {/* =====================================================
           MAIN CONTENT
@@ -64,7 +86,7 @@ export default function PremiumLoader() {
       <div className="relative z-10 flex w-full max-w-[500px] flex-col items-center px-6 text-center">
 
         {/* =====================================================
-            COMPASS / TRAVEL ANIMATION
+            COMPASS
         ====================================================== */}
 
         <div className="relative mb-10 flex h-[180px] w-[180px] items-center justify-center sm:h-[210px] sm:w-[210px]">
@@ -105,9 +127,11 @@ export default function PremiumLoader() {
             E
           </span>
 
+
           {/* Center Glow */}
 
           <div className="absolute h-[92px] w-[92px] rounded-full bg-[#14596a]/40 blur-xl" />
+
 
           {/* Plane */}
 
@@ -123,14 +147,21 @@ export default function PremiumLoader() {
 
           </div>
 
+
           {/* Orbiting Location */}
 
           <div className="absolute inset-0 loader-orbit">
+
             <div className="absolute left-1/2 top-[-7px] -translate-x-1/2">
+
               <div className="flex h-8 w-8 items-center justify-center rounded-full border border-[#d9a737]/40 bg-[#0e4655] text-[#d9a737] shadow-lg">
+
                 <MapPin size={14} />
+
               </div>
+
             </div>
+
           </div>
 
         </div>
@@ -188,33 +219,37 @@ export default function PremiumLoader() {
 
 
         {/* =====================================================
-            ROUTE ANIMATION
+            ROUTE / PROGRESS
         ====================================================== */}
 
         <div className="relative mt-9 w-full max-w-[360px]">
 
-          {/* Route */}
+          {/* Route Background */}
 
-          <div className="relative h-[2px] w-full overflow-hidden rounded-full bg-white/[0.08]">
+          <div className="relative h-[3px] w-full overflow-hidden rounded-full bg-white/[0.08]">
+
+            {/* Progress */}
 
             <div
-              className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-[#14596a] via-[#d9a737] to-[#f3cf73] transition-all duration-300"
-              style={{ width: `${progress}%` }}
+              className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-[#14596a] via-[#d9a737] to-[#f3cf73] transition-all duration-100"
+              style={{
+                width: `${progress}%`,
+              }}
             />
 
             {/* Moving Glow */}
 
             <div
-              className="absolute top-1/2 h-5 w-16 -translate-y-1/2 bg-[#d9a737]/30 blur-md transition-all duration-300"
+              className="absolute top-1/2 h-6 w-20 -translate-y-1/2 bg-[#d9a737]/40 blur-lg transition-all duration-100"
               style={{
-                left: `${Math.max(progress - 8, 0)}%`,
+                left: `${Math.max(progress - 10, 0)}%`,
               }}
             />
 
           </div>
 
 
-          {/* Route Points */}
+          {/* Starting Point */}
 
           <div className="absolute left-0 top-1/2 flex h-4 w-4 -translate-y-1/2 items-center justify-center rounded-full border border-[#d9a737]/60 bg-[#082f3a]">
 
@@ -222,6 +257,8 @@ export default function PremiumLoader() {
 
           </div>
 
+
+          {/* Destination Point */}
 
           <div className="absolute right-0 top-1/2 flex h-4 w-4 -translate-y-1/2 items-center justify-center rounded-full border border-[#d9a737]/60 bg-[#082f3a]">
 
@@ -243,9 +280,18 @@ export default function PremiumLoader() {
 
           <span className="text-[8px] font-bold uppercase tracking-[0.22em] text-[#71949d]">
 
-            Loading Experience
+            {progress < 30
+              ? "Preparing Experience"
+              : progress < 60
+              ? "Mapping Your Journey"
+              : progress < 85
+              ? "Curating Destinations"
+              : progress < 100
+              ? "Almost Ready"
+              : "Journey Ready"}
 
           </span>
+
 
           <span className="font-mono text-[10px] font-semibold tracking-[0.15em] text-[#d9a737]">
 
@@ -293,7 +339,6 @@ export default function PremiumLoader() {
           }
         }
 
-
         @keyframes loaderSpinReverse {
           from {
             transform: rotate(360deg);
@@ -303,7 +348,6 @@ export default function PremiumLoader() {
             transform: rotate(0deg);
           }
         }
-
 
         @keyframes loaderOrbit {
           from {
@@ -315,7 +359,6 @@ export default function PremiumLoader() {
           }
         }
 
-
         @keyframes loaderPlane {
           0%, 100% {
             transform: rotate(-35deg) translateY(0);
@@ -326,9 +369,7 @@ export default function PremiumLoader() {
           }
         }
 
-
         @keyframes loaderStar {
-
           0%, 100% {
             opacity: 0.15;
             transform: scale(1);
@@ -338,29 +379,23 @@ export default function PremiumLoader() {
             opacity: 1;
             transform: scale(1.8);
           }
-
         }
-
 
         .loader-spin-slow {
           animation: loaderSpinSlow 16s linear infinite;
         }
 
-
         .loader-spin-reverse {
           animation: loaderSpinReverse 10s linear infinite;
         }
-
 
         .loader-orbit {
           animation: loaderOrbit 7s linear infinite;
         }
 
-
         .loader-plane {
           animation: loaderPlane 2.5s ease-in-out infinite;
         }
-
 
         .loader-star {
           position: absolute;
@@ -371,13 +406,11 @@ export default function PremiumLoader() {
           animation: loaderStar 2s ease-in-out infinite;
         }
 
-
         .loader-star-1 {
           top: 18%;
           left: 20%;
           animation-delay: 0s;
         }
-
 
         .loader-star-2 {
           top: 25%;
@@ -385,20 +418,17 @@ export default function PremiumLoader() {
           animation-delay: 0.5s;
         }
 
-
         .loader-star-3 {
           bottom: 20%;
           left: 15%;
           animation-delay: 1s;
         }
 
-
         .loader-star-4 {
           bottom: 28%;
           right: 12%;
           animation-delay: 1.5s;
         }
-
 
         .loader-star-5 {
           top: 50%;
