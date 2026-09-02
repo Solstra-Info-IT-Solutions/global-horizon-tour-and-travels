@@ -1,26 +1,23 @@
-import InitialLoader from "@/components/InitialLoader";
-
-import AnnouncementBar from "@/components/AnnouncementBar";
+import type { Metadata } from "next";
+import "./globals.css";
 import FloatingActions from "@/components/FloatingActions";
 import CookieConsent from "@/components/CookieConsent";
+import AnnouncementBar from "@/components/AnnouncementBar";
+import InitialLoader from "@/components/InitialLoader";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export const metadata: Metadata = {
+  title: "Global Tours & Travels",
+  description: "Explore the world with Global Tours & Travels",
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+   <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <InitialLoader>
           <AnnouncementBar />
-
-          {children}
-
+        {children}
           <FloatingActions />
-
           <CookieConsent />
-        </InitialLoader>
       </body>
     </html>
   );
