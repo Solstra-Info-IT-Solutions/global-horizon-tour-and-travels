@@ -8,6 +8,9 @@ import InitialLoader from "@/components/InitialLoader";
 export const metadata: Metadata = {
   title: "Global Tours & Travels",
   description: "Explore the world with Global Tours & Travels",
+    icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
