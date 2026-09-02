@@ -33,7 +33,7 @@ export default function Contact() {
     const message = formData.get("message")?.toString() || "";
 
     // Replace this number with your client's WhatsApp number
-    const whatsappNumber = "919146945571";
+    const whatsappNumber = "917770069004";
 
     const whatsappMessage = `
 🌍 *NEW TRAVEL ENQUIRY*
@@ -415,7 +415,7 @@ Sent from Global Horizons Tours & Travels Website
                   <div className="mt-5 space-y-5">
 
                     <a
-                      href="tel:+919146945571"
+                      href="tel:+919860577147"
                       className="group flex items-center gap-3"
                     >
                       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e7eef0] transition group-hover:bg-[#14596a]">
@@ -431,13 +431,13 @@ Sent from Global Horizons Tours & Travels Website
                         </p>
 
                         <p className="text-sm font-medium text-gray-800">
-                          +91 91469 45571
+                          +91 98605 77147
                         </p>
                       </div>
                     </a>
 
                     <a
-                      href="mailto:info@example.com"
+                      href="mailto:ghtravelsinfo@gmail.com"
                       className="group flex items-center gap-3"
                     >
                       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e7eef0] transition group-hover:bg-[#14596a]">
@@ -453,10 +453,36 @@ Sent from Global Horizons Tours & Travels Website
                         </p>
 
                         <p className="text-sm font-medium text-gray-800">
-                          info@globalhorizons.com
+                          ghtravelsinfo@gmail.com
                         </p>
                       </div>
                     </a>
+
+
+                     {/* WHATSAPP */}
+  <a
+    href="https://wa.me/917770069004"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group flex items-center gap-3"
+  >
+    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#e7eef0] transition group-hover:bg-[#25D366]">
+      <MessageCircle
+        size={18}
+        className="text-[#25D366] transition group-hover:text-white"
+      />
+    </div>
+
+    <div>
+      <p className="text-xs text-gray-500">
+        WHATSAPP
+      </p>
+
+      <p className="text-sm font-medium text-gray-800">
+        +91 777006 9004
+      </p>
+    </div>
+  </a>
 
                   </div>
                 </div>

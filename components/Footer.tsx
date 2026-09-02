@@ -315,7 +315,7 @@ export default function Footer() {
               {/* Phone */}
 
               <a
-                href="tel:+919146945571"
+                href="tel:+919860577147"
                 className="group flex gap-3"
               >
                 <ContactIcon>
@@ -328,7 +328,7 @@ export default function Footer() {
                   </p>
 
                   <p className="mt-1.5 text-[13px] text-[#afc3c8] transition-colors duration-300 group-hover:text-white">
-                    +91 91469 45571
+                    +91 98605 77147
                   </p>
                 </div>
               </a>

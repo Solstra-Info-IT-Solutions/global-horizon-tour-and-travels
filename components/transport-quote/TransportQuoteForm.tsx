@@ -6,7 +6,8 @@ import { Send, ShieldCheck, Loader2 } from "lucide-react";
 import JourneyDetails from "./JourneyDetails";
 import VehicleDetails from "./VehicleDetails";
 import CustomerDetails from "./CustomerDetails";
-import QuoteSuccessModal from "./QuoteSuccessModal";
+
+import FormStatusModal from "@/components/common/FormStatusModal";
 
 export type TransportFormData = {
   journeyType: string;
@@ -29,6 +30,13 @@ export type TransportFormData = {
   email: string;
 
   requirements: string;
+};
+
+type ModalState = {
+  isOpen: boolean;
+  type: "success" | "error";
+  title: string;
+  message: string;
 };
 
 const initialFormData: TransportFormData = {
@@ -59,7 +67,13 @@ export default function TransportQuoteForm() {
     useState<TransportFormData>(initialFormData);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+
+  const [modal, setModal] = useState<ModalState>({
+    isOpen: false,
+    type: "success",
+    title: "",
+    message: "",
+  });
 
   const updateField = (
     field: keyof TransportFormData,
@@ -71,23 +85,202 @@ export default function TransportQuoteForm() {
     }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  // const handleSubmit = async (
+  //   event: FormEvent<HTMLFormElement>
+  // ) => {
+  //   event.preventDefault();
 
-    setIsSubmitting(true);
+  //   // Double submission prevent
+  //   if (isSubmitting) return;
 
-    try {
-      // API integration yahan connect hogi
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+  //   setIsSubmitting(true);
 
-      setIsSuccess(true);
-      setFormData(initialFormData);
-    } catch (error) {
-      console.error("Quote request failed:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:5000/api/transport-quote",
+  //       {
+  //         method: "POST",
+
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+
+  //         body: JSON.stringify(formData),
+  //       }
+  //     );
+
+  //     // Safe JSON parsing
+  //     const result = await response.json().catch(() => ({
+  //       success: false,
+  //       message:
+  //         "Unable to process the server response.",
+  //     }));
+
+  //     if (!response.ok) {
+  //       throw new Error(
+  //         result.message ||
+  //           "Unable to submit transport quote request."
+  //       );
+  //     }
+
+  //     // Reset controlled form data
+  //     setFormData(initialFormData);
+
+  //     // Success Modal
+  //     setModal({
+  //       isOpen: true,
+  //       type: "success",
+  //       title: "Transport Request Received!",
+  //       message:
+  //         "Thank you for sharing your journey details. Our transport specialists have received your request and will get back to you shortly with a customised quotation.",
+  //     });
+  //   } catch (error) {
+  //     console.error(
+  //       "Transport Quote Request Error:",
+  //       error
+  //     );
+
+  //     // Error Modal
+  //     setModal({
+  //       isOpen: true,
+  //       type: "error",
+  //       title: "Unable To Send Request",
+  //       message:
+  //         error instanceof Error
+  //           ? error.message
+  //           : "Something went wrong. Please try again.",
+  //     });
+  //   } finally {
+  //     // IMPORTANT
+  //     // Loading state always reset
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+
+  const handleSubmit = async (
+  event: FormEvent<HTMLFormElement>
+) => {
+  event.preventDefault();
+
+  // Prevent double submission
+  if (isSubmitting) return;
+
+  setIsSubmitting(true);
+
+  try {
+    /* =====================================================
+        CREATE WHATSAPP MESSAGE
+    ===================================================== */
+
+    const whatsappMessage = `
+🚌 *NEW TRANSPORT QUOTE REQUEST*
+
+━━━━━━━━━━━━━━━━━━
+
+👤 *CUSTOMER DETAILS*
+
+Name: ${formData.name || "Not provided"}
+
+Email: ${formData.email || "Not provided"}
+
+Phone: ${formData.phone || "Not provided"}
+
+━━━━━━━━━━━━━━━━━━
+
+🗺️ *JOURNEY DETAILS*
+
+From: ${formData.from || "Not provided"}
+
+To: ${formData.to || "Not provided"}
+
+Travel Date: ${formData.travelDate || "Not provided"}
+
+━━━━━━━━━━━━━━━━━━
+
+🚐 *TRANSPORT REQUIREMENTS*
+
+Vehicle Type: ${formData.vehicleType || "Not specified"}
+
+Number of Travellers: ${
+  formData.travellers || "Not specified"
+}
+
+Journey Type: ${
+  formData.journeyType || "Not specified"
+}
+
+━━━━━━━━━━━━━━━━━━
+
+💬 *ADDITIONAL REQUIREMENTS*
+
+${formData.message || "No additional requirements provided."}
+
+━━━━━━━━━━━━━━━━━━
+
+🌍 *Global Horizons Tours & Travels*
+*New Transport Enquiry*
+`.trim();
+
+    /* =====================================================
+        WHATSAPP NUMBER
+
+        Country code ke saath number use karein.
+        + sign nahi lagana.
+    ===================================================== */
+
+    const whatsappNumber = "917770069004";
+
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      whatsappMessage
+    )}`;
+
+    /* =====================================================
+        OPEN WHATSAPP
+    ===================================================== */
+
+    window.open(
+      whatsappURL,
+      "_blank",
+      "noopener,noreferrer"
+    );
+
+    /* =====================================================
+        RESET FORM
+    ===================================================== */
+
+    setFormData(initialFormData);
+
+    /* =====================================================
+        SUCCESS MODAL
+    ===================================================== */
+
+    setModal({
+      isOpen: true,
+      type: "success",
+      title: "Transport Request Ready!",
+      message:
+        "Your transport request has been prepared successfully. WhatsApp has been opened so you can send your journey details directly to our transport team.",
+    });
+
+  } catch (error) {
+    console.error(
+      "Transport Quote Request Error:",
+      error
+    );
+
+    setModal({
+      isOpen: true,
+      type: "error",
+      title: "Unable To Continue",
+      message:
+        "Something went wrong while preparing your WhatsApp request. Please try again.",
+    });
+
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <>
@@ -109,12 +302,14 @@ export default function TransportQuoteForm() {
               </h2>
 
               <p className="mt-2 text-sm leading-6 text-gray-500">
-                Complete the details below and receive a customized transport
-                quotation from our team.
+                Complete the details below and receive a customized
+                transport quotation from our team.
               </p>
             </div>
           </div>
         </div>
+
+        {/* Form Content */}
 
         <div className="space-y-10 px-6 py-8 sm:px-8 sm:py-10">
           <JourneyDetails
@@ -132,7 +327,7 @@ export default function TransportQuoteForm() {
             updateField={updateField}
           />
 
-          {/* Submit */}
+          {/* Submit Section */}
 
           <div className="border-t border-gray-100 pt-7">
             <button
@@ -142,7 +337,11 @@ export default function TransportQuoteForm() {
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 size={18} className="animate-spin" />
+                  <Loader2
+                    size={18}
+                    className="animate-spin"
+                  />
+
                   Sending Request...
                 </>
               ) : (
@@ -158,17 +357,31 @@ export default function TransportQuoteForm() {
             </button>
 
             <div className="mt-4 flex items-center justify-center gap-2 text-center text-xs text-gray-400">
-              <ShieldCheck size={15} className="text-[#d4a139]" />
+              <ShieldCheck
+                size={15}
+                className="text-[#d4a139]"
+              />
 
-              Your information is securely shared with our travel team.
+              Your information is securely shared with our travel
+              team.
             </div>
           </div>
         </div>
       </form>
 
-      <QuoteSuccessModal
-        isOpen={isSuccess}
-        onClose={() => setIsSuccess(false)}
+      {/* COMMON PREMIUM STATUS MODAL */}
+
+      <FormStatusModal
+        isOpen={modal.isOpen}
+        type={modal.type}
+        title={modal.title}
+        message={modal.message}
+        onClose={() =>
+          setModal((previous) => ({
+            ...previous,
+            isOpen: false,
+          }))
+        }
       />
     </>
   );

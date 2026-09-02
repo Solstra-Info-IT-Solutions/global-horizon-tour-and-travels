@@ -224,7 +224,7 @@ export default function QuickTravelAssistant() {
 
       case "whatsapp":
         window.open(
-          "https://wa.me/919146945571?text=Hello%20Global%20Horizon%20Tours%20%26%20Travels%2C%20I%20need%20help%20with%20my%20travel%20plans.",
+          "https://wa.me/917770069004?text=Hello%20Global%20Horizon%20Tours%20%26%20Travels%2C%20I%20need%20help%20with%20my%20travel%20plans.",
           "_blank",
           "noopener,noreferrer"
         );

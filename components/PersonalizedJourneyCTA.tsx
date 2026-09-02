@@ -58,7 +58,7 @@ export default function PersonalizedJourneyCTA() {
           </Link>
 
           <a
-            href="https://wa.me/919146945571?text=Hello%20Global%20Horizon%20Tours%20%26%20Travels%2C%20I%20would%20like%20to%20plan%20my%20journey."
+            href="https://wa.me/917770069004?text=Hello%20Global%20Horizon%20Tours%20%26%20Travels%2C%20I%20would%20like%20to%20plan%20my%20journey."
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex min-h-[58px] items-center justify-center gap-3 border border-[#123f55]/20 px-8 text-[10px] font-bold uppercase tracking-[0.18em] text-[#123f55] transition-all hover:border-[#d9a737] hover:text-[#d9a737]"

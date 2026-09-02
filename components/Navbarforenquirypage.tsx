@@ -22,7 +22,6 @@ const mainLinks = [
   { name: "About Us", href: "/about" },
   { name: "Services", href: "/services" },
   { name: "Destinations", href: "/destinations" },
-  { name: "Contact Us", href: "/contact" },
 ];
 
 const exploreLinks = [
@@ -102,28 +101,24 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-[100] w-full">
       <nav className="relative border-b border-[#123f55]/10 bg-[#faf9f5]/95 backdrop-blur-xl">
-        
-        {/* PREMIUM TOP GOLD LINE */}
+        {/* PREMIUM GOLD LINE */}
+
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d9a737]/70 to-transparent" />
 
-        <div className="relative mx-auto w-full max-w-[1500px] px-5 sm:px-8 lg:px-10 xl:px-14">
-          
+        <div className="relative mx-auto w-full max-w-[1500px] px-5 sm:px-8 lg:px-10 xl:px-12">
           {/* =====================================================
-              MAIN NAVBAR
+              DESKTOP / MAIN NAVBAR
           ====================================================== */}
 
-          <div className="flex h-[74px] items-center justify-between sm:h-[82px] lg:h-[88px]">
-
+          <div className="flex h-[74px] items-center justify-between sm:h-[82px] lg:grid lg:h-[88px] lg:grid-cols-[minmax(220px,1fr)_auto_minmax(180px,1fr)] lg:gap-5">
             {/* =====================================================
                 LOGO
             ====================================================== */}
 
             <Link
               href="/"
-              className="group flex min-w-0 shrink-0 items-center gap-3"
+              className="group flex min-w-0 items-center gap-3"
             >
-              {/* LOGO */}
-
               <div className="relative flex h-[44px] w-[44px] shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#d9a737]/30 bg-white shadow-[0_6px_20px_rgba(18,63,85,0.08)] transition-all duration-300 group-hover:scale-105 group-hover:border-[#d9a737]/70 sm:h-[48px] sm:w-[48px]">
                 <img
                   src="/logo.png"
@@ -132,10 +127,10 @@ export default function Navbar() {
                 />
               </div>
 
-              {/* BRAND */}
+              {/* BRAND TEXT */}
 
-              <div className="hidden min-w-0 flex-col xl:flex">
-                <span className="truncate font-serif text-[17px] font-bold leading-tight text-[#123f55]">
+              <div className="hidden min-w-0 flex-col 2xl:flex">
+                <span className="whitespace-nowrap font-serif text-[17px] font-bold leading-tight text-[#123f55]">
                   Global Horizons Tours & Travels
                 </span>
 
@@ -147,16 +142,26 @@ export default function Navbar() {
                   </span>
                 </div>
               </div>
+
+              {/* MEDIUM DESKTOP BRAND */}
+
+              <div className="hidden min-w-0 flex-col xl:flex 2xl:hidden">
+                <span className="whitespace-nowrap font-serif text-[16px] font-bold leading-tight text-[#123f55]">
+                  Global Horizons
+                </span>
+
+                <span className="mt-1 text-[7px] font-semibold uppercase tracking-[2px] text-[#123f55]/55">
+                  Tours & Travels
+                </span>
+              </div>
             </Link>
 
             {/* =====================================================
                 DESKTOP NAVIGATION
             ====================================================== */}
 
-            <div className="absolute left-1/2 hidden -translate-x-1/2 lg:flex">
-              
+            <div className="hidden items-center justify-center lg:flex">
               <div className="flex items-center rounded-full border border-[#123f55]/10 bg-[#f4f2ed] p-1 shadow-[0_6px_25px_rgba(18,63,85,0.03)]">
-
                 {/* HOME */}
 
                 <DesktopNavLink
@@ -165,7 +170,6 @@ export default function Navbar() {
                 >
                   Home
                 </DesktopNavLink>
-
 
                 {/* ABOUT */}
 
@@ -176,7 +180,6 @@ export default function Navbar() {
                   About Us
                 </DesktopNavLink>
 
-
                 {/* SERVICES */}
 
                 <DesktopNavLink
@@ -185,7 +188,6 @@ export default function Navbar() {
                 >
                   Services
                 </DesktopNavLink>
-
 
                 {/* DESTINATIONS */}
 
@@ -196,10 +198,7 @@ export default function Navbar() {
                   Destinations
                 </DesktopNavLink>
 
-
-                {/* =====================================================
-                    EXPLORE DROPDOWN
-                ====================================================== */}
+                {/* EXPLORE */}
 
                 <div
                   ref={exploreRef}
@@ -208,7 +207,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={() =>
-                      setIsExploreOpen(!isExploreOpen)
+                      setIsExploreOpen((prev) => !prev)
                     }
                     className={`group relative flex h-[44px] items-center gap-1.5 rounded-full px-4 text-[12px] font-medium transition-all duration-300 xl:px-5 xl:text-[13px] ${
                       isExploreActive
@@ -228,8 +227,6 @@ export default function Navbar() {
                       }`}
                     />
 
-                    {/* GOLD INDICATOR */}
-
                     <span
                       className={`absolute bottom-[7px] left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-[#d9a737] transition-all duration-300 ${
                         isExploreActive
@@ -238,7 +235,6 @@ export default function Navbar() {
                       }`}
                     />
                   </button>
-
 
                   {/* DROPDOWN */}
 
@@ -249,7 +245,7 @@ export default function Navbar() {
                         : "invisible -translate-y-2 opacity-0"
                     }`}
                   >
-                    {/* DROPDOWN HEADER */}
+                    {/* HEADER */}
 
                     <div className="px-4 pb-3 pt-3">
                       <div className="flex items-center gap-2.5">
@@ -264,6 +260,7 @@ export default function Navbar() {
                       </div>
                     </div>
 
+                    {/* LINKS */}
 
                     <div className="space-y-1">
                       {exploreLinks.map((link) => {
@@ -283,10 +280,8 @@ export default function Navbar() {
                                 : "hover:bg-[#f6f3ed]"
                             }`}
                           >
-                            {/* ICON */}
-
                             <div
-                              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
+                              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
                                 active
                                   ? "bg-white/10 text-[#e7ae3c]"
                                   : "bg-[#14596a]/7 text-[#14596a]"
@@ -297,9 +292,6 @@ export default function Navbar() {
                                 strokeWidth={1.7}
                               />
                             </div>
-
-
-                            {/* TEXT */}
 
                             <div className="min-w-0 flex-1">
                               <p
@@ -323,22 +315,20 @@ export default function Navbar() {
                               </p>
                             </div>
 
-
                             <ChevronRight
                               size={16}
-                              className={`transition-transform duration-300 ${
+                              className={
                                 active
                                   ? "text-[#e7ae3c]"
-                                  : "text-[#aab1b2] group-hover/item:translate-x-1 group-hover/item:text-[#14596a]"
-                              }`}
+                                  : "text-[#aab1b2] transition-all group-hover/item:translate-x-1"
+                              }
                             />
                           </Link>
                         );
                       })}
                     </div>
 
-
-                    {/* DROPDOWN FOOTER */}
+                    {/* FOOTER */}
 
                     <div className="mt-2 flex items-center justify-center gap-2 border-t border-[#e7e1d7] px-3 pb-2 pt-3">
                       <span className="h-px w-6 bg-[#d9a737]/50" />
@@ -352,7 +342,6 @@ export default function Navbar() {
                   </div>
                 </div>
 
-
                 {/* CONTACT */}
 
                 <DesktopNavLink
@@ -361,25 +350,38 @@ export default function Navbar() {
                 >
                   Contact Us
                 </DesktopNavLink>
-
               </div>
             </div>
-
 
             {/* =====================================================
                 DESKTOP CTA
             ====================================================== */}
 
-            
+            {/*<div className="hidden items-center justify-end lg:flex">
+              <Link
+                href="/enquiry"
+                className="group relative inline-flex h-[46px] items-center justify-center overflow-hidden whitespace-nowrap rounded-full bg-[#123f55] px-5 text-[9px] font-bold uppercase tracking-[1.3px] text-white shadow-[0_10px_28px_rgba(18,63,85,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_35px_rgba(18,63,85,0.25)] xl:px-6"
+              >
+                <span className="absolute inset-0 translate-x-[-105%] bg-[#d9a737] transition-transform duration-500 group-hover:translate-x-0" />
 
+                <span className="relative z-10 flex items-center gap-2.5 transition-colors duration-300 group-hover:text-[#123f55]">
+                  Plan Your Journey
+
+                  <ArrowUpRight
+                    size={15}
+                    className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </span>
+              </Link>
+            </div>*/}
 
             {/* =====================================================
-                MOBILE MENU BUTTON
+                MOBILE BUTTON
             ====================================================== */}
 
             <button
               type="button"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsOpen((prev) => !prev)}
               className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full border transition-all duration-300 lg:hidden ${
                 isOpen
                   ? "border-[#123f55] bg-[#123f55] text-white"
@@ -390,9 +392,7 @@ export default function Navbar() {
             >
               {isOpen ? <X size={20} /> : <Menu size={21} />}
             </button>
-
           </div>
-
 
           {/* =====================================================
               MOBILE MENU
@@ -406,13 +406,8 @@ export default function Navbar() {
             }`}
           >
             <div className="pb-6 pt-2">
-
               <div className="relative overflow-hidden rounded-[24px] border border-[#e5ded3] bg-[#fffefd] p-3 shadow-[0_20px_60px_rgba(18,63,85,0.12)]">
-
-                {/* TOP ACCENT */}
-
                 <div className="absolute left-0 top-0 h-[3px] w-full bg-gradient-to-r from-[#123f55] via-[#d9a737] to-[#123f55]" />
-
 
                 {/* HEADER */}
 
@@ -424,14 +419,10 @@ export default function Navbar() {
                   </span>
                 </div>
 
-
-                {/* =====================================================
-                    MAIN LINKS
-                ====================================================== */}
+                {/* MAIN LINKS */}
 
                 <div className="space-y-1">
-
-                  {mainLinks.slice(0, 4).map((link, index) => (
+                  {mainLinks.map((link, index) => (
                     <MobileNavLink
                       key={link.name}
                       href={link.href}
@@ -441,13 +432,9 @@ export default function Navbar() {
                       onClick={() => setIsOpen(false)}
                     />
                   ))}
-
                 </div>
 
-
-                {/* =====================================================
-                    EXPLORE SECTION
-                ====================================================== */}
+                {/* EXPLORE */}
 
                 <div className="mx-4 my-4 h-px bg-gradient-to-r from-transparent via-[#d9a737]/30 to-transparent" />
 
@@ -463,7 +450,6 @@ export default function Navbar() {
                     </span>
                   </div>
                 </div>
-
 
                 <div className="space-y-1">
                   {exploreLinks.map((link, index) => {
@@ -504,36 +490,32 @@ export default function Navbar() {
                               : "text-[#9da5a6]"
                           }`}
                         >
-                          {String(index + 5).padStart(2, "0")}
+                          {String(index + 6).padStart(2, "0")}
                         </span>
                       </Link>
                     );
                   })}
                 </div>
 
-
-                {/* CONTACT */}
-
-                <div className="mt-1">
-                  <MobileNavLink
-                    href="/contact"
-                    label="Contact Us"
-                    index={10}
-                    active={isActive("/contact")}
-                    onClick={() => setIsOpen(false)}
-                  />
-                </div>
-
-
                 {/* DIVIDER */}
 
                 <div className="mx-4 my-4 h-px bg-gradient-to-r from-transparent via-[#d9a737]/30 to-transparent" />
 
-
                 {/* CTA */}
 
-          
+                {/*<Link
+                  href="/enquiry"
+                  onClick={() => setIsOpen(false)}
+                  className="group relative flex h-[56px] items-center justify-center overflow-hidden rounded-[16px] bg-[#123f55] text-[10px] font-bold uppercase tracking-[1.7px] text-white shadow-[0_10px_25px_rgba(18,63,85,0.18)]"
+                >
+                  <span className="absolute inset-0 translate-y-full bg-[#d9a737] transition-transform duration-500 group-hover:translate-y-0" />
 
+                  <span className="relative z-10 flex items-center gap-3 transition-colors duration-300 group-hover:text-[#123f55]">
+                    Plan Your Journey
+
+                    <ArrowUpRight size={16} />
+                  </span>
+                </Link>*/}
 
                 {/* FOOTER */}
 
@@ -546,20 +528,17 @@ export default function Navbar() {
 
                   <span className="h-px w-7 bg-[#d9a737]/40" />
                 </div>
-
               </div>
             </div>
           </div>
-
         </div>
       </nav>
     </header>
   );
 }
 
-
 /* =====================================================
-    DESKTOP NAV LINK
+   DESKTOP NAV LINK
 ===================================================== */
 
 function DesktopNavLink({
@@ -586,18 +565,15 @@ function DesktopNavLink({
 
       <span
         className={`absolute bottom-[7px] left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-[#d9a737] transition-all duration-300 ${
-          active
-            ? "w-5"
-            : "w-0 group-hover:w-5"
+          active ? "w-5" : "w-0 group-hover:w-5"
         }`}
       />
     </Link>
   );
 }
 
-
 /* =====================================================
-    MOBILE NAV LINK
+   MOBILE NAV LINK
 ===================================================== */
 
 function MobileNavLink({
