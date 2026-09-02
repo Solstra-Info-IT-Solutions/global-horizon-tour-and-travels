@@ -202,7 +202,7 @@ export default function QuickTravelAssistant() {
       case "expert":
       case "call":
       case "call-support":
-        window.location.href = "tel:+919146945571";
+        window.location.href = "tel:+919860577147";
         break;
 
       case "transport-booking":
@@ -294,7 +294,7 @@ export default function QuickTravelAssistant() {
 
         {!isOpen && (
   <a
-    href="https://wa.me/919146945571?text=Hello%20Global%20Horizon%20Tours%20%26%20Travels%2C%20I%20would%20like%20to%20know%20more%20about%20your%20travel%20services"
+    href="https://wa.me/917770069004?text=Hello%20Global%20Horizon%20Tours%20%26%20Travels%2C%20I%20would%20like%20to%20know%20more%20about%20your%20travel%20services"
     target="_blank"
     rel="noopener noreferrer"
     className="group flex items-center gap-3 rounded-full bg-[#25D366] px-4 py-3 text-white shadow-[0_15px_40px_rgba(37,211,102,0.28)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(37,211,102,0.38)] sm:px-5 sm:py-3.5"
