@@ -2,13 +2,12 @@
 
 import { FormEvent, useState } from "react";
 import {
-  ChevronDown,
-  MapPin,
-  ExternalLink,
-  Send,
-  Clock3,
   Phone,
   Mail,
+  MapPin,
+  Clock,
+  Send,
+  MessageCircle,
 } from "lucide-react";
 
 export default function Contact() {
